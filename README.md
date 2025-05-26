@@ -6,26 +6,27 @@ This project aims to facilitate integration with the [PlugNotas](https://plugnot
 
 The repository is organized into two main folders:
 
-- **`producer-api/`**: API responsible for receiving invoice emission requests and sending them to a message queue.
-- **`consumer-worker/`**: Worker that consumes messages from the queue and interacts with the PlugNotas API to issue invoices.
+- **`producer-api/`**: An API responsible for receiving invoice requests and pushing them into a message queue.
+- **`consumer-worker/`**: A background worker that consumes messages from the queue and communicates with the PlugNotas API to issue the invoices.
 
 ## Technologies Used
 
 - Node.js
 - TypeScript
 - Express.js (in `producer-api`)
-- RabbitMQ or compatible message broker
-- Axios (for HTTP requests to PlugNotas)
+- RabbitMQ (or compatible message broker)
+- Axios (for HTTP requests)
 - dotenv
+- Yarn
 
 ## Prerequisites
 
 - Node.js (v14 or newer)
-- npm or yarn
-- A running instance of RabbitMQ or another message broker
+- Yarn
+- A running RabbitMQ instance
 - A valid PlugNotas API key
 
-## Installation
+## Installation and run
 
 1. Clone the repository:
 
@@ -33,7 +34,9 @@ The repository is organized into two main folders:
 git clone https://github.com/carlos-macha/integracao_plugnotas.git
 
 cd integracao_plugnotas/producer-api
-npm install
+yarn install
+yarn dev
 
 cd ../consumer-worker
-npm install
+yarn install
+yarn dev
