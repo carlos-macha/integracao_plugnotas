@@ -1,0 +1,12 @@
+# Ignorar arquivos de compilação
+node_modules/
+dist/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos temporários de editor
+*.swp
+
+# Ignorar arquivos de configuração locais
+*.env

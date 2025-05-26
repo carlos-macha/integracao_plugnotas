@@ -1,20 +1,19 @@
-import { Request, Response } from "express";
+import { NextFunction } from "express";
 import CepService from "../services/cepService";
-
-const cepService = new CepService();
+import { CepRequest, CepResponse } from "../types/cep";
 
 class CepController {
-    public sendMessage = async (req: Request, res: Response) => {
-        const { cep } = req.body;
-        
-        const response = await cepService.saveCep(cep);
+  constructor(private cepService: CepService = new CepService()) {}
 
-        if (response.status == 201) {
-            res.status(201).json(response.message);
-        } else {
-            res.status(500).json(response.error);
-        }
-    };
-};
+  public sendMessage = async (req: CepRequest, res: CepResponse, next: NextFunction) => {
+    try {
+      const { cep } = req.body;
+      const response = await this.cepService.saveCep(cep);
+      res.status(201).json({ message: "CEP created successfully", data: response.message });
+    } catch (error) {
+      next(error);
+    }
+  };
+}
 
 export default CepController;

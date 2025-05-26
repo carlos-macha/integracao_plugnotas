@@ -1,13 +1,13 @@
 import app from './index';
 import dotenv from 'dotenv';
-import cepRouter from './routes/cepRouter';
 import { connectMongo } from './config/mongo';
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
+const PORT = process.env.PORT || 3000;
 connectMongo();
-app.use(cepRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

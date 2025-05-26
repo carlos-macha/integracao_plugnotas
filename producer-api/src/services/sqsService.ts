@@ -1,19 +1,20 @@
 import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import dotenv from 'dotenv';
+import { getEnvVar } from "../config/env";
 
 dotenv.config();
 
 const sqs = new SQSClient({
-    region: process.env.AWS_REGION,
+    region: getEnvVar("AWS_REGION"),
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        accessKeyId: getEnvVar("AWS_ACCESS_KEY_ID"),
+        secretAccessKey: getEnvVar("AWS_SECRET_ACCESS_KEY"),
     },
 });
 
 export const sendMessageToQueue = async (message: any) => {
     const params = {
-        QueueUrl: process.env.SQS_URL!,
+        QueueUrl: getEnvVar("SQS_URL"),
         MessageBody: JSON.stringify(message),
     };
 

@@ -1,18 +1,19 @@
-import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs";
+import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand, Message } from "@aws-sdk/client-sqs";
 import 'dotenv/config';
+import { getEnvVar } from "../config/env";
 
 const sqs = new SQSClient({
-    region: process.env.AWS_REGION,
+    region: getEnvVar("AWS_REGION"),
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+        accessKeyId: getEnvVar("AWS_ACCESS_KEY_ID"),
+        secretAccessKey: getEnvVar("AWS_SECRET_ACCESS_KEY"),
     },
 });
 
-const SQS_URL = process.env.SQS_URL!;
+const SQS_URL = getEnvVar("SQS_URL");
 
 class SqsService {
-    async receiveMessages() {
+    async receiveMessages(): Promise<Message[]> {
         const command = new ReceiveMessageCommand({
             QueueUrl: SQS_URL,
             MaxNumberOfMessages: 1,
@@ -24,7 +25,7 @@ class SqsService {
         return response.Messages || [];
     };
 
-    async deleteMessage(receiptHandle: string) {
+    async deleteMessage(receiptHandle: string): Promise<void> {
         const command = new DeleteMessageCommand({
             QueueUrl: SQS_URL,
             ReceiptHandle: receiptHandle,
