@@ -28,8 +28,6 @@ The repository is organized into two main folders:
 
 ## Installation and run
 
-1. Clone the repository:
-
 ```bash
 git clone https://github.com/carlos-macha/integracao_plugnotas.git
 
